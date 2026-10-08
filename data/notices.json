@@ -1,0 +1,46 @@
+[
+  {
+    "id": "N001",
+    "item_type": "Lost",
+    "item_category": "ID Card",
+    "description": "A blue synthetic student ID card was last seen near the library entrance.",
+    "location_zone": "Library",
+    "date_lost_found": "2026-10-08",
+    "contact_preference": "Campus Helpdesk",
+    "status": "Lost",
+    "created_at": "2026-10-08T10:30:00"
+  },
+  {
+    "id": "N002",
+    "item_type": "Found",
+    "item_category": "Electronics",
+    "description": "A black USB drive was found on a study table.",
+    "location_zone": "Lab Area",
+    "date_lost_found": "2026-10-08",
+    "contact_preference": "Notice Board",
+    "status": "Found",
+    "created_at": "2026-10-08T11:15:00"
+  },
+  {
+    "id": "N003",
+    "item_type": "Lost",
+    "item_category": "Books",
+    "description": "A green notebook with a plain cover may have been left in a classroom.",
+    "location_zone": "Classroom Block",
+    "date_lost_found": "2026-10-07",
+    "contact_preference": "Department Office",
+    "status": "Lost",
+    "created_at": "2026-10-08T12:05:00"
+  },
+  {
+    "id": "N004",
+    "item_type": "Found",
+    "item_category": "Keys",
+    "description": "A small set of keys with a plain blue tag was found near the cafeteria.",
+    "location_zone": "Cafeteria",
+    "date_lost_found": "2026-10-08",
+    "contact_preference": "Campus Helpdesk",
+    "status": "Found",
+    "created_at": "2026-10-08T13:20:00"
+  }
+]

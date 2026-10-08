@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Notice board · Lost &amp; Found{% endblock %}
+{% block content %}
+<section class="hero-panel">
+  <div class="hero-copy">
+    <div class="hero-kicker"><span class="live-dot"></span> COMMUNITY NOTICE BOARD <span class="kicker-divider">/</span> EXERCISE 4.1</div>
+    <h1>Lost something?<br><em>Found something?</em></h1>
+    <p>A little help goes a long way. Browse the board or add a notice to help an item find its way home.</p>
+    <a class="button hero-button" href="{{ url_for('create') }}"><span class="button-plus">+</span> Post a notice <span aria-hidden="true">↗</span></a>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <div class="sun-disc"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+    <div class="art-card art-card-back"><span class="art-mini-line"></span><span class="art-mini-line short"></span></div>
+    <div class="art-card art-card-front"><span class="art-pin">✳</span><span class="art-line"></span><span class="art-line short"></span><span class="art-chip">FOUND IT</span></div>
+    <div class="spark spark-one">✳</div><div class="spark spark-two">✦</div><div class="art-caption">GOOD THINGS<br>FIND THEIR WAY.</div>
+  </div>
+</section>
+
+<section class="stats-row" aria-label="Notice board summary">
+  <div class="stat-card"><span class="stat-icon">▤</span><div><strong>{{ total_count }}</strong><span>All notices</span></div></div>
+  <div class="stat-card"><span class="stat-icon icon-lost">⌕</span><div><strong>{{ lost_count }}</strong><span>Still looking</span></div></div>
+  <div class="stat-card"><span class="stat-icon icon-found">✳</span><div><strong>{{ found_count }}</strong><span>Found items</span></div></div>
+  <div class="stat-card"><span class="stat-icon icon-resolved">✓</span><div><strong>{{ resolved_count }}</strong><span>Reunited</span></div></div>
+</section>
+
+<section class="board-section" aria-labelledby="board-heading">
+  <div class="board-heading">
+    <div><p class="eyebrow">THE COMMUNITY BOARD</p><h2 id="board-heading">Notices <span class="heading-count">{{ notices|length }}</span></h2></div>
+    <form class="filters" method="get" action="{{ url_for('index') }}">
+      <label class="filter-control"><span class="sr-only">Filter by category</span><span class="filter-symbol">▦</span><select name="category" aria-label="Filter by category"><option value="All">All categories</option>{% for category in categories %}<option value="{{ category }}" {% if selected_category == category %}selected{% endif %}>{{ category }}</option>{% endfor %}</select><span class="select-chevron">⌄</span></label>
+      <label class="filter-control"><span class="sr-only">Filter by location</span><span class="filter-symbol">⌖</span><select name="location" aria-label="Filter by location"><option value="All">All locations</option>{% for location in locations %}<option value="{{ location }}" {% if selected_location == location %}selected{% endif %}>{{ location }}</option>{% endfor %}</select><span class="select-chevron">⌄</span></label>
+      <button class="button filter-button" type="submit">Filter <span aria-hidden="true">→</span></button>
+      {% if selected_category != 'All' or selected_location != 'All' %}<a class="clear-filter" href="{{ url_for('index') }}">Clear</a>{% endif %}
+    </form>
+  </div>
+  {% if notices %}
+  <div class="notice-grid">
+    {% for notice in notices %}
+    <article class="notice-card">
+      <div class="card-top"><span class="badge badge-{{ notice.status|lower }}"><span class="badge-dot"></span>{{ notice.status }}</span><span class="notice-id">{{ notice.id }}</span></div>
+      <h3>{{ notice.item_category }}</h3>
+      <p class="notice-type">{{ notice.item_type }} item</p>
+      <p class="description">{{ notice.description|truncate(132) }}</p>
+      <div class="notice-meta"><span><span aria-hidden="true">⌖</span> {{ notice.location_zone }}</span><span>{{ notice.date_lost_found }}</span></div>
+      <div class="card-bottom"><a class="details-link" href="{{ url_for('detail', notice_id=notice.id) }}">View notice <span aria-hidden="true">↗</span></a>
+        {% if notice.status != 'Resolved' %}<form method="post" action="{{ url_for('resolve', notice_id=notice.id) }}"><button class="resolve-link" type="submit">Mark resolved <span aria-hidden="true">✓</span></button></form>{% else %}<span class="reunited-tag">✓ Reunited</span>{% endif %}
+      </div>
+    </article>
+    {% endfor %}
+    <a class="add-card" href="{{ url_for('create') }}"><span class="add-card-icon">+</span><strong>Have an update?</strong><span>Post a lost or found notice</span><span class="add-card-arrow">↗</span></a>
+  </div>
+  {% else %}<div class="empty-state"><span class="empty-icon">⌕</span><h3>No notices found</h3><p>Try another category or location, or post the first notice.</p><a class="button" href="{{ url_for('create') }}">Create a notice</a></div>{% endif %}
+</section>
+<p class="privacy-note"><span aria-hidden="true">✳</span> A reminder: keep notices general. Please don’t include names, phone numbers, email addresses, or other personal details.</p>
+{% endblock %}

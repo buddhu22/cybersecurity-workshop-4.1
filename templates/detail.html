@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ notice.id }} · Notice details{% endblock %}
+{% block content %}
+<a class="back-link" href="{{ url_for('index') }}">← Back to notices</a>
+<article class="detail-card">
+  <div class="card-top"><span class="badge badge-{{ notice.status|lower }}">{{ notice.status }}</span><span class="notice-id">{{ notice.id }}</span></div>
+  <p class="eyebrow">{{ notice.item_type }} notice</p>
+  <h1>{{ notice.item_category }}</h1>
+  <p class="detail-description">{{ notice.description }}</p>
+  <dl class="details-list">
+    <div><dt>Location zone</dt><dd>{{ notice.location_zone }}</dd></div>
+    <div><dt>Date lost/found</dt><dd>{{ notice.date_lost_found }}</dd></div>
+    <div><dt>Contact preference</dt><dd>{{ notice.contact_preference }}</dd></div>
+    <div><dt>Created</dt><dd>{{ notice.created_at }}</dd></div>
+    <div><dt>Status</dt><dd>{{ notice.status }}</dd></div>
+  </dl>
+  {% if notice.status != 'Resolved' %}<form method="post" action="{{ url_for('resolve', notice_id=notice.id) }}"><button class="button" type="submit">Mark as Resolved</button></form>
+  {% else %}<p class="resolved-message">This notice has already been resolved.</p>{% endif %}
+</article>
+{% endblock %}

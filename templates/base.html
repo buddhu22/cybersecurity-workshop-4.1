@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f2">
+  <meta name="description" content="A friendly local notice board for synthetic lost and found items.">
+  <title>{% block title %}Lost &amp; Found Notice Board{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=2">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container" aria-label="Main navigation">
+      <a class="brand" href="{{ url_for('index') }}"><span class="brand-mark">L<span>&amp;</span>F</span><span class="brand-copy">LOST <span>&amp;</span> FOUND<small>COMMUNITY BOARD</small></span></a>
+      <div class="nav-links">
+        <a class="nav-home" href="{{ url_for('index') }}">The board</a>
+        <a class="button button-small nav-cta" href="{{ url_for('create') }}"><span>+</span> New notice</a>
+      </div>
+    </nav>
+  </header>
+  <main class="container main-content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}<div class="flash-list" aria-live="polite">
+        {% for category, message in messages %}<p class="flash flash-{{ category }}">{{ message }}</p>{% endfor %}
+      </div>{% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="container footer"><span>MADE FOR THE COMMUNITY <span class="footer-star">✳</span> BUILT WITH CARE</span><span>LOCAL WORKSHOP PROTOTYPE · SYNTHETIC DATA ONLY</span></footer>
+</body>
+</html>
