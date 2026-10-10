@@ -1,35 +1,29 @@
 {% extends "base.html" %}
 {% block title %}Create a notice · Lost &amp; Found{% endblock %}
 {% block content %}
+<a class="back-link" href="{{ url_for('index') }}">← Back to notices</a>
 <section class="form-shell">
-  <p class="eyebrow">Synthetic notices only</p>
-  <h1>Create a notice</h1>
-  <p class="form-intro">Do not include names, phone numbers, email addresses, or other personal details in your description.</p>
+  <p class="eyebrow">NEW NOTICE · EXERCISE 4.1</p>
+  <h1>Create a lost or found notice</h1>
+  <p class="form-intro">Enter the item and where it was lost or found. Use synthetic details only; do not add personal contact information.</p>
   <form method="post" action="{{ url_for('create') }}" class="notice-form">
-    <label for="item_type">Notice type</label>
-    <select id="item_type" name="item_type" required aria-invalid="{{ 'true' if errors.get('item_type') else 'false' }}"><option value="">Choose Lost or Found</option>{% for item_type in item_types %}<option value="{{ item_type }}" {% if form_data.get('item_type') == item_type %}selected{% endif %}>{{ item_type }}</option>{% endfor %}</select>
-    {% if errors.get('item_type') %}<span class="field-error">{{ errors.item_type }}</span>{% endif %}
-
-    <label for="item_category">Item category</label>
-    <select id="item_category" name="item_category" required aria-invalid="{{ 'true' if errors.get('item_category') else 'false' }}"><option value="">Choose a category</option>{% for category in categories %}<option value="{{ category }}" {% if form_data.get('item_category') == category %}selected{% endif %}>{{ category }}</option>{% endfor %}</select>
-    {% if errors.get('item_category') %}<span class="field-error">{{ errors.item_category }}</span>{% endif %}
-
+    <div class="form-section-label"><span>01</span><div><strong>Item information</strong><small>What happened to the item?</small></div></div>
+    <div class="form-grid">
+      <div class="field-group"><label for="item_type">Notice type</label><select id="item_type" name="item_type" required aria-invalid="{{ 'true' if errors.get('item_type') else 'false' }}"><option value="">Choose Lost or Found</option>{% for item_type in item_types %}<option value="{{ item_type }}" {% if form_data.get('item_type') == item_type %}selected{% endif %}>{{ item_type }}</option>{% endfor %}</select>{% if errors.get('item_type') %}<span class="field-error">{{ errors.item_type }}</span>{% endif %}</div>
+      <div class="field-group"><label for="item_category">Item category</label><select id="item_category" name="item_category" required aria-invalid="{{ 'true' if errors.get('item_category') else 'false' }}"><option value="">Choose a category</option>{% for category in categories %}<option value="{{ category }}" {% if form_data.get('item_category') == category %}selected{% endif %}>{{ category }}</option>{% endfor %}</select>{% if errors.get('item_category') %}<span class="field-error">{{ errors.item_category }}</span>{% endif %}</div>
+    </div>
     <label for="description">Description</label>
     <textarea id="description" name="description" rows="5" maxlength="500" required aria-describedby="description-help" aria-invalid="{{ 'true' if errors.get('description') else 'false' }}">{{ form_data.get('description', '') }}</textarea>
     <span class="help-text" id="description-help">Up to 500 characters. Keep it general and avoid personal information.</span>
     {% if errors.get('description') %}<span class="field-error">{{ errors.description }}</span>{% endif %}
 
-    <label for="location_zone">Location zone</label>
-    <select id="location_zone" name="location_zone" required aria-invalid="{{ 'true' if errors.get('location_zone') else 'false' }}"><option value="">Choose a location</option>{% for location in locations %}<option value="{{ location }}" {% if form_data.get('location_zone') == location %}selected{% endif %}>{{ location }}</option>{% endfor %}</select>
-    {% if errors.get('location_zone') %}<span class="field-error">{{ errors.location_zone }}</span>{% endif %}
-
-    <label for="date_lost_found">Date lost/found</label>
-    <input id="date_lost_found" name="date_lost_found" type="date" max="{{ today }}" value="{{ form_data.get('date_lost_found', '') }}" required aria-invalid="{{ 'true' if errors.get('date_lost_found') else 'false' }}">
-    {% if errors.get('date_lost_found') %}<span class="field-error">{{ errors.date_lost_found }}</span>{% endif %}
-
-    <label for="contact_preference">Contact preference</label>
-    <select id="contact_preference" name="contact_preference" required aria-invalid="{{ 'true' if errors.get('contact_preference') else 'false' }}"><option value="">Choose a safe contact option</option>{% for contact in contacts %}<option value="{{ contact }}" {% if form_data.get('contact_preference') == contact %}selected{% endif %}>{{ contact }}</option>{% endfor %}</select>
-    {% if errors.get('contact_preference') %}<span class="field-error">{{ errors.contact_preference }}</span>{% endif %}
+    <div class="form-section-label"><span>02</span><div><strong>Place and follow-up</strong><small>Where and how should the notice be handled?</small></div></div>
+    <div class="form-grid">
+      <div class="field-group"><label for="location_zone">Location zone</label><select id="location_zone" name="location_zone" required aria-invalid="{{ 'true' if errors.get('location_zone') else 'false' }}"><option value="">Choose a location</option>{% for location in locations %}<option value="{{ location }}" {% if form_data.get('location_zone') == location %}selected{% endif %}>{{ location }}</option>{% endfor %}</select>{% if errors.get('location_zone') %}<span class="field-error">{{ errors.location_zone }}</span>{% endif %}</div>
+      <div class="field-group"><label for="date_lost_found">Date lost/found</label><input id="date_lost_found" name="date_lost_found" type="date" max="{{ today }}" value="{{ form_data.get('date_lost_found', '') }}" required aria-invalid="{{ 'true' if errors.get('date_lost_found') else 'false' }}">{% if errors.get('date_lost_found') %}<span class="field-error">{{ errors.date_lost_found }}</span>{% endif %}</div>
+      <div class="field-group field-full"><label for="contact_preference">Contact preference</label><select id="contact_preference" name="contact_preference" required aria-invalid="{{ 'true' if errors.get('contact_preference') else 'false' }}"><option value="">Choose a safe contact option</option>{% for contact in contacts %}<option value="{{ contact }}" {% if form_data.get('contact_preference') == contact %}selected{% endif %}>{{ contact }}</option>{% endfor %}</select>{% if errors.get('contact_preference') %}<span class="field-error">{{ errors.contact_preference }}</span>{% endif %}</div>
+    </div>
+    <p class="privacy-callout"><span aria-hidden="true">i</span> Use a shared option such as Campus Helpdesk. This form does not collect phone numbers or email addresses.</p>
     <button class="button form-submit" type="submit">Create notice</button>
   </form>
 </section>
